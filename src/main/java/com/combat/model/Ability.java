@@ -1,14 +1,19 @@
 package com.combat.model;
 
-/** То, что юнит умеет делать на своём ходу. */
+/**
+ * Интерфейс, описывающий способность, которую может применить юнит.
+ */
 public interface Ability {
     String getName();
     DamageType getDamageType();
 
     /**
-     * Применить способность.
+     * Применяет способность к указанной цели.
+     * @param caster тот, кто применяет способность
+     * @param target цель способности
+     * @param log журнал для записи события
      * @throws DeadUnitException если кастер или цель уже мертвы
-     * @throws CombatException   если цель недопустима (например, лечить врага)
+     * @throws CombatException если цель недопустима (например, лечить врага)
      */
     void perform(Unit caster, Unit target, CombatLog log)
             throws DeadUnitException, CombatException;

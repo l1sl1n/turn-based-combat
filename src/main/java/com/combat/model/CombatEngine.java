@@ -5,7 +5,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-/** Управляет пошаговым боем. */
+/**
+ * Движок пошагового боя. Управляет очередностью ходов,
+ * тиканием эффектов и выбором целей для юнитов.
+ */
 public class CombatEngine {
     private static final int MAX_TURNS = 1000;
 
@@ -14,15 +17,27 @@ public class CombatEngine {
     private final List<CombatDecision> decisions = new ArrayList<>();
     private int currentTurn = 0;
 
+    /**
+     * Создает новый экземпляр движка боя.
+     * @param units список юнитов, участвующих в сражении
+     * @throws IllegalArgumentException если список пуст
+     */
     public CombatEngine(List<Unit> units) {
         this.units = List.copyOf(units);
         if (this.units.isEmpty()) throw new IllegalArgumentException("no units");
     }
 
-    /** Запуск боя с автоматическими решениями. */
+    /**
+     * Запускает бой с автоматическим выбором целей.
+     * @return объект CombatResult с логом боя, решениями и победителем
+     */
     public CombatResult run() { return execute(null); }
 
-    /** Воспроизведение боя по записанным решениям. */
+    /**
+     * Воспроизводит бой заново, используя заранее записанные решения.
+     * @param forced список решений, которые нужно применить
+     * @return результат воспроизведенного боя
+     */
     public CombatResult replay(List<CombatDecision> forced) {
         return execute(forced);
     }

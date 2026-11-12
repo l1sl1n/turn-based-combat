@@ -10,9 +10,15 @@ public class CombatLog {
 
     public void setTurnNumber(int n) { turnNumber = n; }
 
-    /** Неизменяемая копия событий. */
+    /**
+     * Возвращает неизменяемую копию списка всех событий боя.
+     * @return список событий
+     */
     public List<CombatEvent> getEvents() { return List.copyOf(events); }
 
+    /**
+     * Выводит весь журнал боя в консоль с указанием номеров ходов.
+     */
     public void print() {
         for (CombatEvent e : events) {
             System.out.println("[Turn " + e.turnNumber() + "] " + e.text());

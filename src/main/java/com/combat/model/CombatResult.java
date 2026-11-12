@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-/** Итог боя. Record — неизменяем. */
+/**
+ * Итоговый результат боя, содержащий журнал событий, историю решений
+ * и информацию о победителе.
+ */
 public record CombatResult(List<CombatEvent> events,
                            List<CombatDecision> decisions,
                            Optional<Team> winner) {

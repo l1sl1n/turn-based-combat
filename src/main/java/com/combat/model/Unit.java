@@ -6,7 +6,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Базовый класс всех юнитов. Sealed — только четыре архетипа.
+ * Базовый класс всех юнитов. Содержит основные характеристики (здоровье, атака, защита)
+ * и логику управления эффектами.
  */
 public sealed abstract class Unit
         permits MeleeFighter, RangedFighter, Mage, Healer {
@@ -73,7 +74,11 @@ public sealed abstract class Unit
         this.ability = Objects.requireNonNull(ability);
     }
 
-    /** Наложить эффект с учётом политики наложения. */
+    /**
+     * Накладывает новый эффект на юнита с учетом правил сложения (StackingPolicy).
+     * @param newEffect эффект, который нужно наложить
+     * @param log журнал для записи события
+     */
     public final void applyEffect(Effect newEffect, CombatLog log) {
         Objects.requireNonNull(newEffect);
         Optional<Effect> existing = effects.stream()
@@ -127,7 +132,12 @@ public sealed abstract class Unit
         return effects.stream().anyMatch(Effect::preventsAction);
     }
 
-    /** Основной путь урона: уязвимость, затем броня, затем щиты. */
+    /**
+     * Наносит юниту урон с учетом его уязвимостей, брони и активных щитов.
+     * @param rawDamage базовый урон до применения модификаторов
+     * @param type тип урона (физический, огненный и т.д.)
+     * @param log журнал для записи события
+     */
     public final void takeDamage(int rawDamage, DamageType type, CombatLog log) {
         if (rawDamage < 0) throw new IllegalArgumentException("damage must be >= 0");
         double mult = type.multiplierAgainst(getType());

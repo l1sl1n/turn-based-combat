@@ -2,7 +2,7 @@ package com.combat.model;
 
 /**
  * Базовый класс эффектов. Sealed — только четыре перечисленных
- * подкласса могут его наследовать.
+ * подкласса (Poison, Shield, Stun, Buff) могут его наследовать.
  */
 public sealed abstract class Effect
         permits PoisonEffect, ShieldEffect, StunEffect, BuffEffect {
@@ -24,7 +24,11 @@ public sealed abstract class Effect
 
     public abstract StackingPolicy getStackingPolicy();
 
-    /** Вызывается в начале хода носителя. */
+    /**
+     * Вызывается в начале хода носителя эффекта (например, для нанесения урона ядом).
+     * @param target юнит, на котором висит эффект
+     * @param log журнал для записи события
+     */
     public abstract void onTurnStart(Unit target, CombatLog log);
 
     /** Хук для уменьшения входящего урона. По умолчанию ничего не делает. */

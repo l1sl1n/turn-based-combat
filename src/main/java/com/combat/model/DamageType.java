@@ -26,7 +26,11 @@ public enum DamageType {
         this.multiplierByTarget = Map.copyOf(multiplierByTarget);
     }
 
-    /** Возвращает множитель урона против указанного архетипа. */
+    /**
+     * Возвращает множитель урона против указанного архетипа цели.
+     * @param type архетип цели (например, MAGE или MELEE)
+     * @return коэффициент урона (1.5 — уязвимость, 0.5 — сопротивление)
+     */
     public double multiplierAgainst(UnitType type) {
         return multiplierByTarget.getOrDefault(type, 1.0);
     }

@@ -30,7 +30,9 @@ public class Demo {
         units.forEach(u -> System.out.println("  " + u
                 + " (initiative " + u.getInitiative() + ")"));
 
-        System.out.println("\n=== Running combat ===");
+        System.out.println("\n==================================================");
+        System.out.println("=== Running combat ===");
+        System.out.println("==================================================\n");
         var engine = new CombatEngine(units);
         var result = engine.run();
         result.events().forEach(e ->
